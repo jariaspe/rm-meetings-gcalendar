@@ -183,7 +183,7 @@ function listEvents(auth) {
 
                 rl.question(eventsLength + ' events will be remove. Do you want to continue (S/n)? ', (answer) => {
                     if (answer === '' || answer === 'S') {
-                        deleteEvents(eventList);
+                        deleteEvents(eventList, auth);
                     }
                     rl.close();
                 });
