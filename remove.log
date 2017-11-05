@@ -1,0 +1,3 @@
+/home/javi/.credentials/calendar-nodejs-quickstart.json
+Authorize this app by visiting this url:  https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&response_type=code&client_id=56049208547-hu24hk8ggb8tne1j45hc1mq9ir3hjabi.apps.googleusercontent.com&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob
+Enter the code from that page here: 
