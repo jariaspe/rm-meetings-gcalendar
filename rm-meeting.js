@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+'use strict';
 var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
@@ -34,7 +36,7 @@ function authorize(credentials, callback) {
     var redirectUrl = credentials.installed.redirect_uris[0];
     var auth = new googleAuth();
     var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
-    console.log(TOKEN_PATH);
+    
     // Check if we have previously stored a token.
     fs.readFile(TOKEN_PATH, function (err, token) {
         if (err) {
