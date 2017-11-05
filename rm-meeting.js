@@ -30,7 +30,11 @@ function configureAcceptedCliParams() {
         .option('-s, --simulated', 'It will just show the events to be removed, but no one will be deleted.')
         .option('-M, --max-results [#results maximum]', 'Maximum number of results to list and remove. Default 10.')
         .option('-c, --calendar-name [calendar name]', 'Name of the calendar to be used. Default "primary".')
-        .parse(process.argv);    
+        .parse(process.argv); 
+    if(Program.args[0] === undefined){
+        console.error('The meeting name is mandatory.');
+        process.exit(1);
+    }
 }
 configureAcceptedCliParams();
 // Load client secrets from a local file.
