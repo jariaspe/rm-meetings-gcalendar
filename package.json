@@ -2,13 +2,14 @@
   "name": "rm-meetings-gcalendar",
   "version": "0.0.1",
   "description": "An engine to remove a list of meetings from Google Calendar",
-  "main": "index",
+  "main": "rm-meetings",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jariaspe",
   "license": "ISC",
   "dependencies": {
+    "commander": "^2.11.0",
     "google-auth-library": "^0.11.0",
     "googleapis": "^22.2.0"
   }
