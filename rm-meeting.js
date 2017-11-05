@@ -158,29 +158,29 @@ function listEvents(auth) {
             console.error('The API returned an error: ' + err);
             return;
         }
-        var events = response.items;
-        const eventsLength = events.length;
+        eventList = response.items;
+        const eventsLength = eventList.length;
 
         if (eventsLength == 0) {
             console.log('No upcoming events found.');
         } else {
             console.log('Upcoming %d events', eventsLength);
             if (Program.list) {
-                events.forEach(event => {
+                eventList.forEach(event => {
                     var eventId = event.id;
                     const start = event.start.dateTime || event.start.date;
                     console.log("Summary: %s - Start: %s - EventId: %s", event.summary, start, event.id);
                 });
             }
-            if (!Program.simulate) {
+            if (!Program.simulated) {
                 const rl = readline.createInterface({
                     input: process.stdin,
                     output: process.stdout
                 });
 
-                rl.question(eventsLength + ' events will be remove. Do you want to continue (S/n)?', (answer) => {
+                rl.question(eventsLength + ' events will be remove. Do you want to continue (S/n)? ', (answer) => {
                     if (answer === '' || answer === 'S') {
-                        console.log('delete Events');
+                        deleteEvents(eventList);
                     }
                     rl.close();
                 });
@@ -190,6 +190,7 @@ function listEvents(auth) {
 }
 
 function deleteEvents(events) {
+    
     events.forEach(event => {
         if (event.status !== 'cancelled') {
             var request = calendar.events.delete({
@@ -205,4 +206,5 @@ function deleteEvents(events) {
             });
         }
     });
+    console.log("Events removed successfully.")
 }
