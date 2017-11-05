@@ -166,8 +166,7 @@ function listEvents(auth) {
         } else {
             console.log('Upcoming %d events', eventsLength);
             if (Program.list) {
-                eventList.forEach(event => {
-                    var eventId = event.id;
+                eventList.forEach(event => {                    
                     const start = event.start.dateTime || event.start.date;
                     console.log("Summary: %s - Start: %s - EventId: %s", event.summary, start, event.id);
                 });
@@ -189,13 +188,13 @@ function listEvents(auth) {
     });
 }
 
-function deleteEvents(events) {
-    
+function deleteEvents(events, auth) {
+    var calendar = google.calendar('v3');
     events.forEach(event => {
         if (event.status !== 'cancelled') {
             var request = calendar.events.delete({
                 auth: auth,
-                eventId: eventId,
+                eventId: event.id,
                 calendarId: 'primary'
             }, function (getErr, getResponse) {
                 if (getErr) {
