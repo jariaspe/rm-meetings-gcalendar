@@ -16,6 +16,8 @@ const TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
 const TOKEN_PATH = TOKEN_DIR + 'calendar-nodejs-quickstart.json';
 var eventList;
+const maxResults = 10;
+const calendarName = 'primary';
 /**
  * Read the params passed to the app
  */
@@ -25,8 +27,10 @@ function configureAcceptedCliParams() {
         .usage('[options] <meeting-name>')
         .description('  An engine to remove a list of meetings from Google Calendar.')
         .option('-l, --list', 'Show the list of events.')
-        .option('-s, --simulated', 'It will just show the events to be removed, but no one will be deleted')
-        .parse(process.argv);
+        .option('-s, --simulated', 'It will just show the events to be removed, but no one will be deleted.')
+        .option('-M, --max-results [#results maximum]', 'Maximum number of results to list and remove. Default 10.')
+        .option('-c, --calendar-name [calendar name]', 'Name of the calendar to be used. Default "primary".')
+        .parse(process.argv);    
 }
 configureAcceptedCliParams();
 // Load client secrets from a local file.
@@ -148,10 +152,10 @@ function listEvents(auth) {
     var calendar = google.calendar('v3');
     const options = {
         auth: auth,
-        calendarId: 'primary',
+        calendarId: Program.calendarName || calendarName,
         timeMin: (new Date()).toISOString(),
         q: Program.args[0] || '',
-        maxResults: 10
+        maxResults: Program.maxResults || maxResults
     };
     calendar.events.list(options, function (err, response) {
         if (err) {
@@ -195,7 +199,7 @@ function deleteEvents(events, auth) {
             var request = calendar.events.delete({
                 auth: auth,
                 eventId: event.id,
-                calendarId: 'primary'
+                calendarId: Program.calendarName || calendarName
             }, function (getErr, getResponse) {
                 if (getErr) {
                     console.error('Error deleting: ' + getErr);
@@ -204,6 +208,5 @@ function deleteEvents(events, auth) {
 
             });
         }
-    });
-    console.log("Events removed successfully.")
+    });    
 }
