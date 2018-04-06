@@ -19,5 +19,5 @@ npm install
 ```
 ### Step 3. Run the program
 ```bash
-./rm-meeting --help
+./rm-meeting.js --help
 ```

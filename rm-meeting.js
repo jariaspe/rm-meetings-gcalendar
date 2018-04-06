@@ -17,7 +17,7 @@ const TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
 const TOKEN_PATH = TOKEN_DIR + 'calendar-nodejs-quickstart.json';
 var eventList;
 const maxResults = 10;
-const calendarName = 'primary';
+const calendarId = 'primary';
 /**
  * Read the params passed to the app
  */
@@ -29,7 +29,7 @@ function configureAcceptedCliParams() {
         .option('-l, --list', 'Show the list of events.')
         .option('-s, --simulated', 'It will just show the events to be removed, but no one will be deleted.')
         .option('-M, --max-results [#results maximum]', 'Maximum number of results to list and remove. Default 10.')
-        .option('-c, --calendar-name [calendar name]', 'Name of the calendar to be used. Default "primary".')
+        .option('-c, --calendar-id [calendar id]', 'Identifier of the calendar to be used. Default "primary".')
         .parse(process.argv); 
     if(Program.args[0] === undefined){
         console.error('The meeting name is mandatory.');
@@ -156,7 +156,7 @@ function listEvents(auth) {
     var calendar = google.calendar('v3');
     const options = {
         auth: auth,
-        calendarId: Program.calendarName || calendarName,
+        calendarId: Program.calendarId || calendarId,
         timeMin: (new Date()).toISOString(),
         q: Program.args[0] || '',
         maxResults: Program.maxResults || maxResults
@@ -203,7 +203,7 @@ function deleteEvents(events, auth) {
             var request = calendar.events.delete({
                 auth: auth,
                 eventId: event.id,
-                calendarId: Program.calendarName || calendarName
+                calendarId: Program.calendarId || calendarId
             }, function (getErr, getResponse) {
                 if (getErr) {
                     console.error('Error deleting: ' + getErr);
